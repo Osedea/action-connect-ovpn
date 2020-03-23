@@ -10,6 +10,7 @@ try {
   const fileOVPN = core.getInput('FILE_OVPN')
   const secret = core.getInput('SECRET')
   const tlsKey = core.getInput('TLS_KEY')
+  const privateKey = core.getInput('PRIVATE_KEY_PASSWORD')
 
   if (process.env.CA_CRT == null) {
     core.setFailed(`Can't get ca cert please add CA_CRT in secret`)
@@ -43,8 +44,13 @@ try {
   if (secret !== '') {
     createFile('secret.txt', secret)
   }
+
   if (tlsKey !== '') {
     createFile('tls.key', tlsKey)
+  }
+
+  if (privateKey !== '') {
+    createFile('key.pass', privateKey)
   }
 
   createFile('ca.crt', process.env.CA_CRT)

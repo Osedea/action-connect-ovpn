@@ -63,28 +63,38 @@ example.
         run: sudo killall openvpn
 ```
 
-## How to prepare file .ovpn
+## How to prepare .ovpn file
 
-### Step
+### Steps
 
-1. Copy data inside tag 
-`<ca></ca>`
-`<cert></cert>`
-`<key></key>`
-to encode base64 after that save to secret env github actions
+1. Copy data inside tags:
+- `<ca></ca>`
+- `<cert></cert>`
+- `<key></key>`
+- `<tls></tls>` (if applicable)
+- `<tls-auth></tls-auth>` (if applicable)
 
-2. Remove tag 
-`<ca></ca>`
-`<cert></cert>`
-`<key></key> `
-and replace to 
+and base64 encode them each individually, saving the values of each to github actions secrets.
+
+2. Remove the (now empty) tags
+- `<ca></ca>`
+- `<cert></cert>`
+- `<key></key>`
+- `<tls></tls>` (if applicable)
+- `<tls-auth></tls-auth>` (if applicable)
+
+and replace them with
+```
 ca ca.crt
 cert user.crt
 key user.key
+auth-user-pass secret.txt
+tls-auth tls.key # IF APPLICABLE
+askpass key.pass # IF APPLICABLE
+```
 
-3. If open vpn have username and password please encode base64 after that save to secret env github actions
-format username password
-username-vpn
-password-vpn
-
-4. If open vpn have tag `<tls></tls>` please make step 1 and 2
+3. If openvpn has username and password, please encode base64 and then save github actions secrets, the following value:
+```
+MyUsernameHere
+MyPasswordHere
+```
